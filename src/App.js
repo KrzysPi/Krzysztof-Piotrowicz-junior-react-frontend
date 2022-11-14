@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Category from "./pages/Category.jsx";
+import Product from "./pages/Product.jsx";
+import Cart from "./pages/Cart.jsx";
+import Navbar from "./components/Navbar.jsx";
+import { DataProvider } from "./context/DataContext.jsx";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DataProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          {/* <Route path="/" element={<Navbar />} /> */}
+          <Route
+            path="/:id"
+            // render={({ match }) => (
+            //   <Category categoryName={match.params.categoryName} />
+            // )}
+            element={<Category />}
+          />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </Router>
+    </DataProvider>
   );
 }
 
