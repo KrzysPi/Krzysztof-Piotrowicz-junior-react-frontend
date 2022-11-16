@@ -51,7 +51,6 @@ export class ProductAttributes extends Component {
                   onChange={(e) => {
                     if (onChange === "product") {
                       setSelectedProducts(product.id, atr.id, item.id);
-                      console.log(selectedProducts);
                     } else if (onChange === "basket") {
                       this.setState(
                         (prevState) => ({

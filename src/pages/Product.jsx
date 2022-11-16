@@ -33,7 +33,6 @@ class Product extends Component {
           ]);
 
         const res = await client.post(producDataQuery);
-        console.log(res);
         this.setState({ productData: res });
         this.setState({ selectedImg: res.product.gallery[0] });
       } catch (error) {

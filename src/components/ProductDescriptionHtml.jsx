@@ -1,6 +1,7 @@
 // import PropTypes from "prop-types";
 import React, { Component } from "react";
 
+// !!! Assumption: data provider have already sanitized html
 export class ProductDescriptionHtml extends Component {
   render() {
     return (

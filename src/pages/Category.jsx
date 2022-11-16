@@ -17,9 +17,6 @@ class Category extends Component {
   capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  submitHandeler = (route) => {
-    this.props.navigate(`/category/:${route}`);
-  };
 
   render() {
     const { category } = this.context;

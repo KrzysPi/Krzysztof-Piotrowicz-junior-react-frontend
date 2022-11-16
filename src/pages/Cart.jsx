@@ -1,25 +1,23 @@
 import { Component } from "react";
 import DataContext from "../context/DataContext.jsx";
 import ProductInCart from "../components/ProductInCart.jsx";
-import Spinner from "../components/Spinner.jsx";
-
 import { SubmitButton } from "../components/SubmitButton.jsx";
+import { withParams } from "../higherOrderComponents/withParams.js";
+import { withNavigation } from "../higherOrderComponents/withNavigation.js";
+
 export class Cart extends Component {
-  // localStorageTheArray = JSON.parse(localStorage.getItem("theArray"));
   render() {
     const {
-      selectedProducts,
       productsInBasket,
+      resetProductInBasket,
       selectedCurrency,
       totalBasketPrice,
-      setTotalBasketPrice,
     } = this.context;
     const TAX = 0.21;
-    // if (!productsInBasket) return <Spinner />;
-    // else
+
     return (
-      <div className="cart-container">
-        <h2>CART</h2>
+      <div>
+        <h1>CART</h1>
         {productsInBasket
           .filter(
             (item, index, arr) =>
@@ -34,40 +32,37 @@ export class Cart extends Component {
             />
           ))}
         <div className="cart-summary">
-          <div className="tax">
+          <div className="cart-tax">
             <div id="title"> {`Tax ${TAX * 100}%:`} </div>
             <div id="value">{` ${selectedCurrency.symbol}${(
               totalBasketPrice * TAX
             ).toFixed(2)}`}</div>
           </div>
 
-          <div className="quantity">
+          <div className="cart-quantity">
             <div id="title">Quantity: </div>{" "}
             <div id="value"> {productsInBasket.length}</div>
           </div>
-          <div className="total-price">
-            <div id="title"> Total: </div>{" "}
-            <div id="value">{totalBasketPrice}</div>
+          <div className="cart-total-price">
+            <div id="title"> Total: </div>
+            <div id="value">{`${selectedCurrency.symbol}${totalBasketPrice}`}</div>
           </div>
         </div>
         <SubmitButton
           placeholder="ORDER"
-          className="order-button"
+          className="cart-order-button"
           onClick={(e) => {
-            e.preventDefault();
-            console.log("Realized");
-            console.log(productsInBasket);
-            console.log(selectedProducts);
-            console.log(
-              productsInBasket.reduce((acc, { prices }) => {
-                prices.forEach((price) =>
-                  price.currency.symbol === selectedCurrency.symbol
-                    ? (acc += price.amount)
-                    : acc
-                );
-                return acc;
-              }, 0)
-            );
+            productsInBasket.length !== 0
+              ? alert(
+                  `Now You have to pay ${
+                    selectedCurrency.symbol
+                  }${totalBasketPrice} for ${productsInBasket.length} ${
+                    productsInBasket.length > 1 ? "products" : "product"
+                  }.`
+                )
+              : alert(`Your bsket is empty!`);
+            resetProductInBasket();
+            this.props.navigate(`/all`);
           }}
         />
       </div>
@@ -75,4 +70,4 @@ export class Cart extends Component {
   }
 }
 Cart.contextType = DataContext;
-export default Cart;
+export default withNavigation(withParams(Cart));

@@ -11,14 +11,8 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          {/* <Route path="/" element={<Navbar />} /> */}
-          <Route
-            path="/:id"
-            // render={({ match }) => (
-            //   <Category categoryName={match.params.categoryName} />
-            // )}
-            element={<Category />}
-          />
+          <Route path="/" element={<Navbar />} />
+          <Route path="/:category" element={<Category />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>

@@ -13,9 +13,6 @@ export class DropdownCart extends Component {
     this.state = {
       showMenu: false,
     };
-
-    // this.wrapperRef = React.createRef();
-    // this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   componentDidMount() {
@@ -40,9 +37,12 @@ export class DropdownCart extends Component {
   };
 
   render() {
-    const { selectedCurrency, productsInBasket, totalBasketPrice } =
-      this.context;
-    const { options } = this.props;
+    const {
+      selectedCurrency,
+      productsInBasket,
+      totalBasketPrice,
+      resetProductInBasket,
+    } = this.context;
 
     return (
       <div className="dropdown-cart-container">
@@ -92,7 +92,7 @@ export class DropdownCart extends Component {
                   className="dropdown-cart-button-view-bag"
                   onClick={(e) => {
                     e.preventDefault();
-                    this.props.navigate(`/cart`);
+                    this.props.navigate(`/all`);
                     this.setState({ showMenu: false });
                   }}
                   placeholder={"VIEW BAG"}
@@ -100,9 +100,17 @@ export class DropdownCart extends Component {
                 <SubmitButton
                   className="dropdown-cart-button-check-out"
                   onClick={(e) => {
-                    e.preventDefault();
-                    this.props.navigate(`/checkout`);
-                    this.setState({ showMenu: false });
+                    productsInBasket.length !== 0
+                      ? alert(
+                          `Now You have to pay ${
+                            selectedCurrency.symbol
+                          }${totalBasketPrice} for ${productsInBasket.length} ${
+                            productsInBasket.length > 1 ? "products" : "product"
+                          }.`
+                        )
+                      : alert(`Your bsket is empty!`);
+                    resetProductInBasket();
+                    this.props.navigate(`/`);
                   }}
                   placeholder={"CHECK OUT"}
                 ></SubmitButton>

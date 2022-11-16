@@ -15,13 +15,11 @@ export class DataProvider extends Component {
     totalBasketPrice: 0,
   };
 
-  // State update
   componentDidMount() {
     this.fetchCategories();
     this.fetchCurrency();
   }
 
-  // Fetching categories
   fetchCategories = async () => {
     client.setEndpoint(
       process.env.GRAPHQL_ENDPOINT || "http://localhost:4000/"
@@ -38,7 +36,6 @@ export class DataProvider extends Component {
     }
   };
 
-  // Fetching currencies
   fetchCurrency = async () => {
     client.setEndpoint(
       process.env.GRAPHQL_ENDPOINT || "http://localhost:4000/"
@@ -56,7 +53,6 @@ export class DataProvider extends Component {
     }
   };
 
-  // Fetching minimal data for products listing
   fetchProdustsAllMini = async () => {
     try {
       client.setEndpoint(
@@ -139,6 +135,11 @@ export class DataProvider extends Component {
     );
   };
 
+  resetProductInBasket = () => {
+    this.setState({ productsInBasket: [] });
+    this.setState({ totalBasketPrice: 0 });
+  };
+
   setTotalBasketPrice = (callback) => {
     this.setState(
       {
@@ -165,30 +166,27 @@ export class DataProvider extends Component {
 
   render() {
     const {
-      selectedCurrency, //currencyDropbox, ListingItems, ProductPrice
+      selectedCurrency,
       selectedProducts,
       productsInBasket,
-      category, //ListingItems, Category
-      categories, //Navbar
-      currencies, //Navbar
+      category,
+      categories,
+      currencies,
       totalBasketPrice,
     } = this.state;
     const {
       fetchProdustsAllMini,
-      setSelectedCurrency, //currencyDropbox
-      setCategory, //Navbar
+      setSelectedCurrency,
+      setCategory,
       setSelectedProducts,
       addProductToBasket,
       resetSelectedProduct,
       removeProductFromBasket,
       setTotalBasketPrice,
-      // setSelectedProductAttributes,
+      resetProductInBasket,
     } = this;
 
-    // console.log(categories, category, currencies);
-
     return (
-      // W tym miejscu przypisujemy wsztskie zmienne i funkcje do context, dzięki czemu możemy je wykozystać w innych komponentach
       <DataContext.Provider
         value={{
           selectedCurrency,
@@ -206,7 +204,7 @@ export class DataProvider extends Component {
           removeProductFromBasket,
           setTotalBasketPrice,
           totalBasketPrice,
-          // setSelectedProductAttributes,
+          resetProductInBasket,
         }}
       >
         {this.props.children}

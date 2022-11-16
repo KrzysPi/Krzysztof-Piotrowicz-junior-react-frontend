@@ -43,11 +43,11 @@ class ListingItems extends Component {
       category,
       selectedCurrency,
       setSelectedProducts,
-      selectedProducts,
       resetSelectedProduct,
       addProductToBasket,
       setTotalBasketPrice,
     } = this.context;
+
     if (!this.state.productsAll) return <Spinner />;
     else
       return (
@@ -69,7 +69,6 @@ class ListingItems extends Component {
                             this.navigateHandeler(prod.id);
                             resetSelectedProduct();
                             setSelectedProducts(prod.id);
-                            console.log(selectedProducts);
                           }
                         }}
                       >
@@ -94,7 +93,6 @@ class ListingItems extends Component {
                             className="listing-cart-icon"
                             onClick={(e) => {
                               e.preventDefault();
-                              console.log(prod);
                               let obj = {
                                 productId: prod.id,
                                 prices: [...prod.prices],
