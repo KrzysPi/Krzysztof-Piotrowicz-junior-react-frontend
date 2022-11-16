@@ -53,11 +53,7 @@ class DropdownCurrency extends Component {
                   setSelectedCurrency(option, setTotalBasketPrice);
                 }}
                 key={option.symbol}
-                className={`dropdown-item ${
-                  !selectedCurrency
-                    ? false
-                    : selectedCurrency.label === option.label && "selected"
-                }`}
+                className="dropdown-item"
               >
                 {`${option.symbol} ${option.label}`}
               </div>

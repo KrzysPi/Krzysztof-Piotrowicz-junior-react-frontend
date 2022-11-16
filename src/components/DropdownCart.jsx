@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DataContext from "../context/DataContext";
-import { withParams } from "../middleware/withParams.js";
-import { withNavigation } from "../middleware/withNavigation.js";
+import { withParams } from "../higherOrderComponents/withParams.js";
+import { withNavigation } from "../higherOrderComponents/withNavigation.js";
 import { ReactComponent as CartIcon } from "../assets/svg/emptyCart.svg";
 import { ProductInCart } from "./ProductInCart";
 import SubmitButton from "./SubmitButton";

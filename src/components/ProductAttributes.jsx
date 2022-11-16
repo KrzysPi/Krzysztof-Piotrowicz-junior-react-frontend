@@ -3,8 +3,6 @@ import AttributeButton from "../components/AttributeButton.jsx";
 import DataContext from "../context/DataContext";
 
 export class ProductAttributes extends Component {
-  // renderAtributes = (attributes) => {
-  //     attributes.map((atr) => (<div key={atr.id}>{atr.id}</div>));
   constructor(props) {
     super(props);
 
@@ -72,7 +70,7 @@ export class ProductAttributes extends Component {
                         }
                       );
                     } else {
-                      console.error("onChange not defined");
+                      console.error("<AttributeButton> onChange not defined");
                     }
                   }}
                 />

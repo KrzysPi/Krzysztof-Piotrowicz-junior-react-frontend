@@ -1,7 +1,7 @@
 // import PropTypes from "prop-types";
 import React, { Component } from "react";
 
-export class Description extends Component {
+export class ProductDescriptionHtml extends Component {
   render() {
     return (
       <div
@@ -14,4 +14,4 @@ export class Description extends Component {
   }
 }
 
-export default Description;
+export default ProductDescriptionHtml;

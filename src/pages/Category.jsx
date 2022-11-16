@@ -1,5 +1,5 @@
 import { Component } from "react";
-import ListingItem from "../components/ListingItem.jsx";
+import ListingItem from "../components/ListingItems.jsx";
 import DataContext from "../context/DataContext.jsx";
 
 class Category extends Component {
@@ -23,14 +23,11 @@ class Category extends Component {
 
   render() {
     const { category } = this.context;
-    let { categoryName } = this.props;
 
     return (
       <div className="category-text">
         <header>
-          {category && (
-            <p className="pageHeader">{this.capitalizeFirstLetter(category)}</p>
-          )}
+          {category && <p>{this.capitalizeFirstLetter(category)}</p>}
         </header>
         <ListingItem />
       </div>

@@ -4,23 +4,11 @@ export class AttributeButton extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedItem: [],
-    };
+    this.state = {};
   }
-  onValueChange(event) {
-    this.setState({
-      selectedOption: event.target.value,
-    });
-  }
-
-  isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) => {
-    return scrollHeight > clientHeight || scrollWidth > clientWidth;
-  };
 
   render() {
-    const { productsInBasket, setSelectedProducts, selectedProducts } =
-      this.context;
+    const { productsInBasket } = this.context;
     const { attribute, item, onChange, setDefault, product, showMenu } =
       this.props;
 
@@ -33,7 +21,6 @@ export class AttributeButton extends Component {
           label={item.value.toUpperCase()}
           type="radio"
           name={attribute.name}
-          // value={item.value}
           onChange={onChange}
           defaultChecked={
             !setDefault
@@ -42,8 +29,6 @@ export class AttributeButton extends Component {
                     prod.productId === product.id &&
                     prod[attribute.id] === item.id
                 )
-                ? true
-                : false
               : false
           }
         ></input>
@@ -55,14 +40,14 @@ export class AttributeButton extends Component {
           style={{ backgroundColor: item.value }}
           type="radio"
           name={attribute.name}
-          // value={item.value}
           onChange={onChange}
           defaultChecked={
-            productsInBasket.find(
-              (prod) =>
-                prod.productId === product.id && prod[attribute.id] === item.id
-            )
-              ? true
+            !setDefault
+              ? productsInBasket.find(
+                  (prod) =>
+                    prod.productId === product.id &&
+                    prod[attribute.id] === item.id
+                )
               : false
           }
         ></input>

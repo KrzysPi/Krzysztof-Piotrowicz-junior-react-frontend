@@ -1,13 +1,14 @@
 import { Component } from "react";
 import { client, Query } from "@tilework/opus";
 import DataContext from "../context/DataContext.jsx";
-import { withParams } from "../middleware/withParams.js";
-import { withNavigation } from "../middleware/withNavigation.js";
+import { withParams } from "../higherOrderComponents/withParams.js";
+import { withNavigation } from "../higherOrderComponents/withNavigation.js";
+import Spinner from "../components/Spinner";
 import ProductMiniImgList from "../components/ProductMiniImgList";
 import ProductAttributes from "../components/ProductAttributes.jsx";
 import ProductPrice from "../components/ProductPrice.jsx";
 import SubmitButton from "../components/SubmitButton.jsx";
-import Description from "../components/DescriptionHTML.jsx";
+import Description from "../components/ProductDescriptionHtml.jsx";
 
 class Product extends Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class Product extends Component {
     this.state = {
       productData: null,
       selectedImg: "",
-      // selectedItem: [],
     };
   }
   componentDidMount() {
@@ -44,52 +44,15 @@ class Product extends Component {
   }
 
   onClickImg = (e) => {
-    // e.stopPropagation();
     this.setState({ selectedImg: e.target.src });
   };
 
-  onClick = (e) => {
-    e.preventDefault();
-    console.log(e.target.name);
-  };
-
-  // addProductToLocalStorage = (id, content) => {
-  //   localStorage.setItem(id, JSON.stringify(content));
-  // };
-
-  // handleChange = (event) => {
-  //   this.setState({
-  //     // the map method doesn't mutate the original array, it returns a new one
-  //     data: this.state.selectedItem.map((item) => {
-  //       // iterate through the array to find the right item to update
-  //       if (item.product !== event.target.name) {
-  //         // not match, so we won't change anything here
-  //         return item;
-  //       } else {
-  //         // match, we return the updated value
-  //         return {
-  //           title: item.title,
-  //           // event.target.value is a string, but the state uses number so we have to convert it
-  //           status: Number(event.target.value),
-  //         };
-  //       }
-  //     }),
-  //   });
-  // };
-
   render() {
-    const {
-      selectedProducts,
-      addProductToBasket,
-      setTotalBasketPrice,
-      resetSelectedProduct,
-      setSelectedProducts,
-      productsInBasket,
-    } = this.context;
+    const { selectedProducts, addProductToBasket, setTotalBasketPrice } =
+      this.context;
     const productPriceHeder = "price:";
-    // setSelectedProducts()
-
-    if (this.state.productData) {
+    if (!this.state.productData) return <Spinner />;
+    else
       return (
         <div className="product-container">
           <ProductMiniImgList
@@ -111,7 +74,7 @@ class Product extends Component {
             <form>
               <ProductAttributes
                 product={this.state.productData.product}
-                default={true}
+                setDefault={true}
                 onChange={"product"}
               />
               <div className="product-price-header">
@@ -134,7 +97,8 @@ class Product extends Component {
                 }}
                 disabled={
                   Object.keys(selectedProducts).length !==
-                  this.state.productData.product.attributes.length + 1
+                    this.state.productData.product.attributes.length + 1 ||
+                  this.state.productData.product.inStock === false
                 }
               />
               <Description
@@ -144,7 +108,6 @@ class Product extends Component {
           </div>
         </div>
       );
-    }
   }
 }
 

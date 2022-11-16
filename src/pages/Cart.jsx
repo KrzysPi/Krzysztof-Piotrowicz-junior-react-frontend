@@ -1,12 +1,11 @@
 import { Component } from "react";
-import { client, Query } from "@tilework/opus";
 import DataContext from "../context/DataContext.jsx";
 import ProductInCart from "../components/ProductInCart.jsx";
-import { withNavigation } from "../middleware/withNavigation.js";
+import Spinner from "../components/Spinner.jsx";
+
 import { SubmitButton } from "../components/SubmitButton.jsx";
 export class Cart extends Component {
   // localStorageTheArray = JSON.parse(localStorage.getItem("theArray"));
-  static contextType = DataContext;
   render() {
     const {
       selectedProducts,
@@ -15,8 +14,9 @@ export class Cart extends Component {
       totalBasketPrice,
       setTotalBasketPrice,
     } = this.context;
-    const TAX = 21;
-
+    const TAX = 0.21;
+    // if (!productsInBasket) return <Spinner />;
+    // else
     return (
       <div className="cart-container">
         <h2>CART</h2>
@@ -35,9 +35,9 @@ export class Cart extends Component {
           ))}
         <div className="cart-summary">
           <div className="tax">
-            <div id="title"> Tax 21%: </div>
+            <div id="title"> {`Tax ${TAX * 100}%:`} </div>
             <div id="value">{` ${selectedCurrency.symbol}${(
-              totalBasketPrice * 0.21
+              totalBasketPrice * TAX
             ).toFixed(2)}`}</div>
           </div>
 

@@ -1,17 +1,13 @@
 import { Component } from "react";
 import { client, Query } from "@tilework/opus";
-import DataContext from "../context/DataContext.jsx";
 import ProductAttributes from "../components/ProductAttributes.jsx";
 import ProductPrice from "../components/ProductPrice.jsx";
-import SubmitButton from "../components/SubmitButton.jsx";
-import Spinner from "../components/Spinner";
 import CartSlideshow from "./CartSlideshow.jsx";
 import ProductQuantity from "./ProductQuantity.jsx";
 
 export class ProductInCart extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
 
     this.state = {
       productData: null,
@@ -34,7 +30,6 @@ export class ProductInCart extends Component {
 
         const res = await client.post(producDataQuery);
         this.setState({ productData: res });
-        // this.setState({ selectedImg: await res.product.gallery[0] });
       } catch (error) {
         console.error("Unable to fetch data");
       }
@@ -44,10 +39,7 @@ export class ProductInCart extends Component {
 
   render() {
     const { productInCart, showMenu } = this.props;
-    const { selectedProducts, productsInBasket, setSelectedProducts } =
-      this.context;
     if (this.state.productData) {
-      // console.log(this.state.productData);
       return (
         <div
           className={
@@ -90,9 +82,6 @@ export class ProductInCart extends Component {
                 setDefault={false}
                 onChange={"basket"}
                 showMenu={showMenu}
-                // onChange={this.onAttributeChange(setSelectedProducts)}
-
-                // selectedAttributes={this.props.productData}
               />
             </form>
           </div>
@@ -101,12 +90,13 @@ export class ProductInCart extends Component {
               showMenu={showMenu}
               productInCart={productInCart}
             />
-            <CartSlideshow showMenu={showMenu} gallery={this.state.productData.product.gallery} />
+            <CartSlideshow
+              showMenu={showMenu}
+              gallery={this.state.productData.product.gallery}
+            />
           </div>
         </div>
       );
-    } else {
-      return <Spinner />;
     }
   }
 }
