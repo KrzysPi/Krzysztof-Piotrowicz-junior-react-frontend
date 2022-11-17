@@ -5,7 +5,7 @@ body {
   margin: 0;
   margin-top: 10rem;
   padding: 0rem 6.25rem;
-  background-color: #ffffff;
+  background-color: #fff;
   font-family: "Raleway", sans-serif;
   color: #1d1f22;
 }
@@ -21,7 +21,7 @@ body {
   justify-content: space-between;
   align-items: center;
   display: flex;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .navbar-categories {
@@ -101,7 +101,7 @@ body {
   padding: 1px;
 }
 
-/* ------------------------------------------ DrobpdownCart ------------------------------------------*/
+/* ------------------------------------------ DropdownCart ------------------------------------------*/
 
 .dropdown-cart-container {
 }
@@ -172,20 +172,7 @@ body {
   align-items: center;
 }
 
-.dropdown-cart-button-view-bag {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  width: 8.75rem;
-  height: 2.75rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 120%;
-  color: #1d1f22;
-  background: #fff;
-  cursor: pointer;
-}
+.dropdown-cart-button-view-bag,
 .dropdown-cart-button-check-out {
   display: flex;
   justify-content: center;
@@ -196,10 +183,18 @@ body {
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 120%;
+  cursor: pointer;
+}
+
+.dropdown-cart-button-view-bag {
+  margin-right: 1rem;
+  color: #1d1f22;
+  background: #fff;
+}
+.dropdown-cart-button-check-out {
   color: #fff;
   background: #5ece7b;
   border: 0px;
-  cursor: pointer;
 }
 
 /* ------------------------------------------ Category page ------------------------------------------*/
@@ -691,4 +686,36 @@ body {
   width: 7.5rem;
   height: 100%;
   object-fit: contain;
+}
+
+/* ------------------------------------------ Spinner ------------------------------------------*/
+
+.loading-spinner-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 0.5rem solid;
+  border-color: #5ece7b transparent #5ece7b transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

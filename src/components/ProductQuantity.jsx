@@ -11,14 +11,21 @@ export class ProductQuantity extends Component {
   }
 
   render() {
-    const id = this.props.productInCart.productId;
-    const { showMenu, productInCart } = this.props;
     const {
       productsInBasket,
       addProductToBasket,
       removeProductFromBasket,
       setTotalBasketPrice,
     } = this.context;
+    const { showMenu, productInCart } = this.props;
+    const productQuantity = this.context.productsInBasket.reduce(
+      (quantity, product) =>
+        product.productId === this.props.productInCart.productId
+          ? (quantity += 1)
+          : quantity,
+      0
+    );
+
     return (
       <div
         className={
@@ -41,11 +48,7 @@ export class ProductQuantity extends Component {
             showMenu ? "dropdown-quantity-display  " : "quantity-display"
           }
         >
-          {productsInBasket.reduce(
-            (quantity, product) =>
-              product.productId === id ? (quantity += 1) : quantity,
-            0
-          )}
+          {productQuantity}
         </div>
         <MinusIcon
           type="button"

@@ -7,9 +7,17 @@ export class AttributeButton extends Component {
     this.state = {};
   }
 
+  toggleDefaultCheck = () =>
+    !this.props.setDefault
+      ? this.context.productsInBasket.find(
+          (prod) =>
+            prod.productId === this.props.product.id &&
+            prod[this.props.attribute.id] === this.props.item.id
+        )
+      : false;
+
   render() {
-    const { productsInBasket } = this.context;
-    const { attribute, item, onChange, setDefault, product, showMenu } =
+    const { attribute, item, onChange,showMenu } =
       this.props;
 
     return attribute.type !== "swatch" ? (
@@ -22,15 +30,7 @@ export class AttributeButton extends Component {
           type="radio"
           name={attribute.name}
           onChange={onChange}
-          defaultChecked={
-            !setDefault
-              ? productsInBasket.find(
-                  (prod) =>
-                    prod.productId === product.id &&
-                    prod[attribute.id] === item.id
-                )
-              : false
-          }
+          defaultChecked={this.toggleDefaultCheck()}
         ></input>
       </div>
     ) : (
@@ -41,15 +41,7 @@ export class AttributeButton extends Component {
           type="radio"
           name={attribute.name}
           onChange={onChange}
-          defaultChecked={
-            !setDefault
-              ? productsInBasket.find(
-                  (prod) =>
-                    prod.productId === product.id &&
-                    prod[attribute.id] === item.id
-                )
-              : false
-          }
+          defaultChecked={this.toggleDefaultCheck()}
         ></input>
       </div>
     );

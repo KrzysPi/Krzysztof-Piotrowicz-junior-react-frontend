@@ -10,15 +10,35 @@ export class ProductAttributes extends Component {
       selected: this.props.productInCart,
     };
   }
+
+  onClickAtrBtn = (atr, item) => {
+    if (this.props.onChange === "product") {
+      this.context.setSelectedProducts(this.props.product.id, atr.id, item.id);
+    } else if (this.props.onChange === "basket") {
+      this.setState(
+        (prevState) => ({
+          selected: {
+            ...prevState.selected,
+            productId: this.props.product.id,
+            [atr.id]: item.id,
+            prices: [...this.props.product.prices],
+          },
+        }),
+        () => {
+          this.context.removeProductFromBasket(
+            this.context.productsInBasket.indexOf(this.props.productInCart)
+          );
+          this.context.addProductToBasket(this.state.selected);
+        }
+      );
+    } else {
+      console.error("<AttributeButton> onChange not defined");
+    }
+  };
+
   render() {
-    const {
-      productsInBasket,
-      setSelectedProducts,
-      removeProductFromBasket,
-      addProductToBasket,
-      selectedProducts,
-    } = this.context;
-    const { showMenu, product, onChange, setDefault, productInCart } =
+ 
+    const { showMenu, product, setDefault} =
       this.props;
     if (!this.props.product) {
       return;
@@ -48,30 +68,7 @@ export class ProductAttributes extends Component {
                   attribute={atr}
                   key={item.id}
                   setDefault={setDefault}
-                  onChange={(e) => {
-                    if (onChange === "product") {
-                      setSelectedProducts(product.id, atr.id, item.id);
-                    } else if (onChange === "basket") {
-                      this.setState(
-                        (prevState) => ({
-                          selected: {
-                            ...prevState.selected,
-                            productId: product.id,
-                            [atr.id]: item.id,
-                            prices: [...product.prices],
-                          },
-                        }),
-                        () => {
-                          removeProductFromBasket(
-                            productsInBasket.indexOf(productInCart)
-                          );
-                          addProductToBasket(this.state.selected);
-                        }
-                      );
-                    } else {
-                      console.error("<AttributeButton> onChange not defined");
-                    }
-                  }}
+                  onChange={() => this.onClickAtrBtn(atr, item)}
                 />
               ))}
             </div>

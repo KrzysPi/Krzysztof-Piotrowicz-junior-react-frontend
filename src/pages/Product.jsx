@@ -49,7 +49,9 @@ class Product extends Component {
   render() {
     const { selectedProducts, addProductToBasket, setTotalBasketPrice } =
       this.context;
+
     const productPriceHeder = "price:";
+
     if (!this.state.productData) return <Spinner />;
     else
       return (

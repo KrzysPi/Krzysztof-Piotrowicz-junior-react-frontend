@@ -38,14 +38,24 @@ class ListingItems extends Component {
     this.props.navigate(`/product/${id}`);
   };
 
+  onClickIcon = (prod, e) => {
+    e.preventDefault();
+    let obj = {
+      productId: prod.id,
+      prices: [...prod.prices],
+    };
+    prod.attributes.forEach((atr) => {
+      obj[atr.id] = atr.items[0].id;
+    });
+    this.context.addProductToBasket(obj, this.context.setTotalBasketPrice);
+  };
+
   render() {
     const {
       category,
       selectedCurrency,
       setSelectedProducts,
       resetSelectedProduct,
-      addProductToBasket,
-      setTotalBasketPrice,
     } = this.context;
 
     if (!this.state.productsAll) return <Spinner />;
@@ -91,17 +101,7 @@ class ListingItems extends Component {
                           <GreenCartIcon
                             id="icon"
                             className="listing-cart-icon"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              let obj = {
-                                productId: prod.id,
-                                prices: [...prod.prices],
-                              };
-                              prod.attributes.forEach((atr) => {
-                                obj[atr.id] = atr.items[0].id;
-                              });
-                              addProductToBasket(obj, setTotalBasketPrice);
-                            }}
+                            onClick={(e) => this.onClickIcon(prod, e)}
                           ></GreenCartIcon>
                         )}
                         <div className="listing-product-name">

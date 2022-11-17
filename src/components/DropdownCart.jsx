@@ -36,6 +36,22 @@ export class DropdownCart extends Component {
     this.setState({ showMenu: true });
   };
 
+  alertOnOrder = () => {
+    this.context.productsInBasket.length !== 0
+      ? alert(
+          `Now You have to pay ${this.context.selectedCurrency.symbol}${
+            this.context.totalBasketPrice
+          } for ${this.context.productsInBasket.length} ${
+            this.context.productsInBasket.length > 1 ? "products" : "product"
+          }:\n ${this.context.productsInBasket.reduce(
+            (acc, product, index) =>
+              (acc += `${index + 1}. ${product.productId},\n`),
+            ""
+          )}`
+        )
+      : alert(`Your bsket is empty!`);
+  };
+
   render() {
     const {
       selectedCurrency,
@@ -67,7 +83,7 @@ export class DropdownCart extends Component {
                   }`}
                 </span>
               </div>
-              {productsInBasket
+              {this.context.productsInBasket
                 .filter(
                   (item, index, arr) =>
                     arr
@@ -99,18 +115,10 @@ export class DropdownCart extends Component {
                 ></SubmitButton>
                 <SubmitButton
                   className="dropdown-cart-button-check-out"
-                  onClick={(e) => {
-                    productsInBasket.length !== 0
-                      ? alert(
-                          `Now You have to pay ${
-                            selectedCurrency.symbol
-                          }${totalBasketPrice} for ${productsInBasket.length} ${
-                            productsInBasket.length > 1 ? "products" : "product"
-                          }.`
-                        )
-                      : alert(`Your bsket is empty!`);
+                  onClick={() => {
+                    this.alertOnOrder();
                     resetProductInBasket();
-                    this.props.navigate(`/`);
+                    this.props.navigate(`/all`);
                   }}
                   placeholder={"CHECK OUT"}
                 ></SubmitButton>

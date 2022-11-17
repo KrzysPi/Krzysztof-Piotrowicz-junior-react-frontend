@@ -6,6 +6,22 @@ import { withParams } from "../higherOrderComponents/withParams.js";
 import { withNavigation } from "../higherOrderComponents/withNavigation.js";
 
 export class Cart extends Component {
+  alertOnOrder = () => {
+    this.context.productsInBasket.length !== 0
+      ? alert(
+          `Now You have to pay ${this.context.selectedCurrency.symbol}${
+            this.context.totalBasketPrice
+          } for ${this.context.productsInBasket.length} ${
+            this.context.productsInBasket.length > 1 ? "products" : "product"
+          }:\n ${this.context.productsInBasket.reduce(
+            (acc, product, index) =>
+              (acc += `${index + 1}. ${product.productId},\n`),
+            ""
+          )}`
+        )
+      : alert(`Your bsket is empty!`);
+  };
+
   render() {
     const {
       productsInBasket,
@@ -51,16 +67,8 @@ export class Cart extends Component {
         <SubmitButton
           placeholder="ORDER"
           className="cart-order-button"
-          onClick={(e) => {
-            productsInBasket.length !== 0
-              ? alert(
-                  `Now You have to pay ${
-                    selectedCurrency.symbol
-                  }${totalBasketPrice} for ${productsInBasket.length} ${
-                    productsInBasket.length > 1 ? "products" : "product"
-                  }.`
-                )
-              : alert(`Your bsket is empty!`);
+          onClick={() => {
+            this.alertOnOrder();
             resetProductInBasket();
             this.props.navigate(`/all`);
           }}
