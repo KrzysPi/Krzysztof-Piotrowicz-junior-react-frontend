@@ -108,7 +108,7 @@ export class DropdownCart extends Component {
                   className="dropdown-cart-button-view-bag"
                   onClick={(e) => {
                     e.preventDefault();
-                    this.props.navigate(`/all`);
+                    this.props.navigate(`/cart`);
                     this.setState({ showMenu: false });
                   }}
                   placeholder={"VIEW BAG"}
